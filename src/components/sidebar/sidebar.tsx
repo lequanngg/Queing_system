@@ -6,11 +6,8 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AssessmentIcon from "@mui/icons-material/Assessment";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { removeAccessToken } from "../../utils/localStorageService";
 import { Link, useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../../assets/png/alta.png";
 import HomeIcon from "../../assets/svg/dashboard.svg";
 import ThietBiIcon from "../../assets/svg/5.svg";
@@ -109,12 +106,6 @@ const ListItemTextStyle = styled(ListItemText)`
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
-
-  const [btn, setBtn] = React.useState(false);
-
-  const handleClickBtn = () => {
-    setBtn(!btn);
-  };
 
   const handleclickLogout = () => {
     removeAccessToken();

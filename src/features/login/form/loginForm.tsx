@@ -84,7 +84,7 @@ const LoginForm: React.FC = () => {
             Tên đăng nhập *
           </InputLabel>
           <OutlinedInput
-            id="outlined-adornment-password"
+            id="outlined-adornment-username"
             type={"text"}
             {...register("userNameOrEmailAddress", { required: true })}
             label="Tên đăng nhập *"

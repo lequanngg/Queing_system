@@ -4,7 +4,6 @@ import Login from "./features/login";
 import Home from "./components/";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./features/homePage/HomePage";
-import Chat from "./features/chat/Chat";
 import Profile from "./features/profile/Profile";
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="home" element={<Home />}>
               <Route index element={<HomePage />} />
-              <Route path="chat" element={<Chat />} />
               <Route path="profile" element={<Profile />} />
             </Route>
           </Routes>

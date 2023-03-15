@@ -3,7 +3,7 @@ import styled from "styled-components";
 import avatar from "../../assets/png/avatar.png";
 import iconNotification from "../../assets/svg/iconNotification.svg";
 import ArrowRight from "../../assets/svg/arrow-right.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface HeadMainView {
   titleFirst: string;
@@ -11,6 +11,7 @@ interface HeadMainView {
   titleThird?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export default function HeadMainView(props: HeadMainView) {
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ export default function HeadMainView(props: HeadMainView) {
     align-items: center;
     margin-right: 62px;
     gap: 24px;
+    position: relative;
+    z-index: 1;
     .title {
       font-weight: 400;
       font-size: 12px;
