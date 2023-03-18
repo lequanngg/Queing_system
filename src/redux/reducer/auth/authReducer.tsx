@@ -26,16 +26,7 @@ const authSlice = createSlice({
             state.progress = 'pending';
         });
         builder.addCase(AuthenticateAction.fulfilled, (state, action) => {
-            state.progress = "done";
-            state.success = action.payload.success;
-            if (state.success === true) {
-                setAccessToken(action.payload.result.accessToken);
-                state.user.accessToken = action.payload.result.accessToken;
-                state.user.userId = action.payload.result.userId;
-            } else {
-                // state.error.message = action.payload.error.message;
-                // state.error.details = action.payload.error.details;
-            }
+      
     });
 }});
 

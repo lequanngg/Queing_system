@@ -275,7 +275,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <HeadMainView titleFirst="Dashboard" />
+      <HeadMainView active={0} titleFirst="Dashboard" />
       <MainHome>
         <div className="left-db">
           <div className="title">Biểu đồ cấp số</div>
