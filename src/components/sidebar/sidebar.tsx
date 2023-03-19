@@ -16,6 +16,10 @@ import CapSoIcon from "../../assets/svg/4.svg";
 import BaoCaoIcon from "../../assets/svg/baocao.svg";
 import CaiDatHeThongIcon from "../../assets/svg/setting.svg";
 import logout from "../../assets/svg/2.svg";
+import More from "../../assets/svg/more.svg";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const Container = styled.div`
   display: flex;
@@ -111,6 +115,15 @@ const Sidebar: React.FC = () => {
   const handleclickLogout = () => {
     removeAccessToken();
     navigate("/");
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -286,8 +299,44 @@ const Sidebar: React.FC = () => {
                     : {}
                 }
               />
+              <div className="more-sidebar">
+                <Button
+                  id="demo-positioned-button"
+                  aria-controls={open ? "demo-positioned-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <img src={More} alt="" />
+                </Button>
+              </div>
             </ListItemButton>
           </StyleLink>
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <StyleLink to="/home/quanlyvaitro">
+              <MenuItem onClick={handleClose}>Quản lý vai trò</MenuItem>
+            </StyleLink>
+            <StyleLink to="/home/quanlytaikhoan">
+              <MenuItem onClick={handleClose}>Quản lý tài khoản</MenuItem>
+            </StyleLink>{" "}
+            <StyleLink to="/home/nhatkyhoatdong">
+              <MenuItem onClick={handleClose}>Nhật ký người dùng</MenuItem>
+            </StyleLink>
+          </Menu>
         </List>
       </SidebarList>
       <SidebarBottom>

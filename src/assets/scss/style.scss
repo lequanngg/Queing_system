@@ -124,8 +124,8 @@
   .css-1xhypcz-MuiStack-root {
     gap: 20px;
   }
-  
-  .css-1xhypcz-MuiStack-root>.MuiTextField-root {
+
+  .css-1xhypcz-MuiStack-root > .MuiTextField-root {
     min-width: 162px;
   }
 
@@ -147,5 +147,22 @@
   }
   .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
     padding: 0;
+  }
+}
+
+.more-sidebar {
+  .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    padding: 0;
+    margin: 0;
+    color: white;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 15px;
+    }
+    img :hover {
+      background-color: #e7e9f2;
+    }
   }
 }
