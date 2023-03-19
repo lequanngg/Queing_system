@@ -61,7 +61,7 @@ export default function Profile() {
 
   return (
     <div>
-      <HeadMainView titleFirst="Thông tin cá nhân" />
+      <HeadMainView active={0} titleFirst="Thông tin cá nhân" />
       <ContentProfile>
         <div className="content">
           <div className="avatar">
