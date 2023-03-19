@@ -45,27 +45,43 @@ const Extra = styled.div`
 `;
 
 const LoginForm: React.FC = () => {
+  const [pass, setPass] = useState("1");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [step, setStep] = useState(0);
+  const [error, setError] = useState(false);
   const accessToken = getAccessToken();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const onSubmit = (props: IAuthenticateReq) => {
-    if (props.userNameOrEmailAddress === "1" && props.password === "1") {
+    if (props.userNameOrEmailAddress === "1" && props.password === pass) {
       navigate("/home");
+    } else {
+      setError(true);
     }
-    // dispatch(
-    //   AuthenticateAction({
-    //     userNameOrEmailAddress: props.userNameOrEmailAddress,
-    //     password: props.password,
-    //     rememberClient: props.rememberClient,
-    //   })
-    // );
   };
 
+  const enterMail = (props: any) => {
+    console.log(props, "aaa");
+  };
+  const EnterPassword = (props: any) => {
+    if (props.duplicatePass1 === props.duplicatePass2) {
+      setPass(props.duplicatePass2);
+      alert("Thành Công");
+      setError(false);
+      setStep(0);
+
+
+        reset({ password: "" });
+
+    } else {
+      alert("2 mật khẩu không giống nhau");
+    }
+  };
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IAuthenticateReq>();
 
@@ -76,54 +92,195 @@ const LoginForm: React.FC = () => {
   }, [accessToken, navigate]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FullBox sx={{ "& > :not(style)": { m: 1 } }}>
-        <img src={logo} alt="login" />
-        <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Tên đăng nhập *
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-username"
-            type={"text"}
-            {...register("userNameOrEmailAddress", { required: true })}
-            label="Tên đăng nhập *"
-          />
-        </FormControl>
+    <div>
+      {step === 0 ? (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FullBox sx={{ "& > :not(style)": { m: 1 } }}>
+            <img src={logo} alt="login" />
+            <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Tên đăng nhập *
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-username"
+                type={"text"}
+                {...register("userNameOrEmailAddress", { required: true })}
+                label="Tên đăng nhập *"
+                error={error}
+              />
+            </FormControl>
 
-        <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            {...register("password", { required: true })}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-        <Extra>Quên Mật Khẩu</Extra>
+            <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                error={error}
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                {...register("password", { required: true })}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+            {error && <Extra>Sai mật khẩu hoặc tên đăng nhập</Extra>}
 
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{ width: "170px", background: "#FF9138" }}
-        >
-          Login
-        </Button>
-      </FullBox>
-    </form>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: "170px", background: "#FF9138" }}
+              >
+                Login
+              </Button>
+              <Extra
+                style={{ display: "flex", justifyContent: "center" }}
+                onClick={() => setStep(1)}
+              >
+                <span>Quên Mật Khẩu</span>
+              </Extra>
+            </div>
+          </FullBox>
+        </form>
+      ) : step === 1 ? (
+        <form onSubmit={handleSubmit(enterMail)}>
+          <FullBox sx={{ "& > :not(style)": { m: 1 } }}>
+            <img src={logo} alt="login" style={{ marginBottom: "50px" }} />
+            <div style={{ fontWeight: "600" }}>Đặt lại mật khẩu</div>
+            <div style={{ fontWeight: "400" }}>
+              Vui lòng nhập email để đặt lại mật khẩu của bạn *
+            </div>
+            <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Email
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-username"
+                type={"text"}
+                {...register("email", { required: true })}
+              />
+            </FormControl>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
+              <Button
+                type="submit"
+                onClick={() => setStep(0)}
+                variant="contained"
+                sx={{ width: "170px" }}
+              >
+                Hủy
+              </Button>
+              <Button
+                type="submit"
+                onClick={() => {
+                  setStep(2);
+                  reset({ duplicatePass2: "" });
+                }}
+                variant="contained"
+                sx={{ width: "170px", background: "#FF9138" }}
+              >
+                Tiếp tục
+              </Button>
+            </div>
+          </FullBox>
+        </form>
+      ) : (
+        <form onSubmit={handleSubmit(EnterPassword)}>
+          <FullBox sx={{ "& > :not(style)": { m: 1 } }}>
+            <img src={logo} alt="login" />
+            <div style={{ fontWeight: "400", marginTop: "50px" }}>
+              Đặt lại mật khẩu mới
+            </div>
+
+            <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                {...register("duplicatePass1", { required: true })}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+
+            <FormControl sx={{ m: 1, width: "300px" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                {...register("duplicatePass2", { required: true })}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: "170px", background: "#FF9138" }}
+              >
+                Xác Nhận
+              </Button>
+            </div>
+          </FullBox>
+        </form>
+      )}
+    </div>
   );
 };
 

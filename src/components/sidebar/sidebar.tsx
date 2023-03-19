@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { removeAccessToken } from "../../utils/localStorageService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/png/alta.png";
 import HomeIcon from "../../assets/svg/dashboard.svg";
 import ThietBiIcon from "../../assets/svg/5.svg";
@@ -106,6 +106,7 @@ const ListItemTextStyle = styled(ListItemText)`
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleclickLogout = () => {
     removeAccessToken();
@@ -135,54 +136,156 @@ const Sidebar: React.FC = () => {
           }
         >
           <StyleLink to="/home">
-            <ListItemButton>
+            <ListItemButton
+              style={
+                location.pathname === "/home"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={HomeIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Dashboard" />
+              <ListItemTextStyle
+                primary="Dashboard"
+                style={
+                  location.pathname === "/home"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+              />
             </ListItemButton>
           </StyleLink>
 
-          <StyleLink to="/home">
+          <StyleLink to="/home/thietbi">
             {/* style={{textDecoration: 'none', color: 'black'}} */}
-            <ListItemButton>
+            <ListItemButton
+              style={
+                location.pathname === "/home/thietbi"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={ThietBiIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Thiết bị" />
+              <ListItemTextStyle
+                primary="Thiết bị"
+                style={
+                  location.pathname === "/home/thietbi"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+              />
             </ListItemButton>
           </StyleLink>
-          <StyleLink to="/home">
+          <StyleLink to="/home/dichvu">
             {/* style={{textDecoration: 'none', color: 'black'}} */}
-            <ListItemButton>
+            <ListItemButton
+              style={
+                location.pathname === "/home/dichvu"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={DichVuIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Dịch vụ" />
+              <ListItemTextStyle
+                style={
+                  location.pathname === "/home/dichvu"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+                primary="Dịch vụ"
+              />
             </ListItemButton>
           </StyleLink>
-          <StyleLink to="/home/loginchat">
-            <ListItemButton>
+          <StyleLink to="/home/capso">
+            <ListItemButton
+              style={
+                location.pathname === "/home/capso"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={CapSoIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Cấp số" />
+              <ListItemTextStyle
+                primary="Cấp số"
+                style={
+                  location.pathname === "/home/capso"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+              />
             </ListItemButton>
           </StyleLink>
-          <StyleLink to="/home/loginchat">
-            <ListItemButton>
+          <StyleLink to="/home/baocao">
+            <ListItemButton
+              style={
+                location.pathname === "/home/baocao"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={BaoCaoIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Báo cáo" />
+              <ListItemTextStyle
+                primary="Báo cáo"
+                style={
+                  location.pathname === "/home/baocao"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+              />
             </ListItemButton>
           </StyleLink>
-          <StyleLink to="/home/loginchat">
-            <ListItemButton>
+          <StyleLink to="/home/caidathethong">
+            <ListItemButton
+              style={
+                location.pathname === "/home/caidathethong"
+                  ? {
+                      background: "#FF9138",
+                    }
+                  : {}
+              }
+            >
               <ListItemIcon>
                 <img src={CaiDatHeThongIcon} />
               </ListItemIcon>
-              <ListItemTextStyle primary="Cài đặt hệ thống" />
+              <ListItemTextStyle
+                primary="Cài đặt hệ thống"
+                style={
+                  location.pathname === "/home/caidathethong"
+                    ? {
+                        color: "white",
+                      }
+                    : {}
+                }
+              />
             </ListItemButton>
           </StyleLink>
         </List>

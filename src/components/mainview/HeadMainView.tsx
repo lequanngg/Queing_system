@@ -6,6 +6,7 @@ import ArrowRight from "../../assets/svg/arrow-right.svg";
 import { useNavigate } from "react-router-dom";
 
 interface HeadMainView {
+  active: number
   titleFirst: string;
   titleSecond?: string;
   titleThird?: string;
@@ -26,7 +27,7 @@ export default function HeadMainView(props: HeadMainView) {
     font-weight: 700;
     font-size: 20px;
     line-height: 30px;
-    color: #ff9138;
+    
     display: flex;
     gap: 15px;
     .arrow {
@@ -77,17 +78,17 @@ export default function HeadMainView(props: HeadMainView) {
   return (
     <HeadMainView>
       <HeadLeft>
-        <div>{props.titleFirst}</div>
+        <div style={ props.active === 0 ? {color: '#ff9138'} : {}}  >{props.titleFirst}</div>
         {props.titleSecond && (
           <div className="arrow">
             <img src={ArrowRight} alt="arrow" />
-            <div>{props.titleSecond}</div>
+            <div style={ props.active === 1 ? {color: '#ff9138'} : {}} >{props.titleSecond}</div>
           </div>
         )}
         {props.titleThird && (
           <div className="arrow">
             <img src={ArrowRight} alt="arrow" />
-            <div>{props.titleThird}</div>
+            <div style={ props.active === 2 ? {color: '#ff9138'} : {}} >{props.titleThird}</div>
           </div>
         )}
       </HeadLeft>

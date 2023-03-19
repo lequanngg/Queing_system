@@ -1,0 +1,117 @@
+.device {
+  margin-right: 24px;
+  .full-item {
+    justify-content: space-between;
+  }
+  .item-1 {
+    width: 60%;
+  }
+  .item-2 {
+    width: 40%;
+    display: flex;
+    justify-content: end;
+    margin-right: 100px;
+    .item-2-content {
+      width: 350px;
+    }
+    .right-fiels {
+    }
+  }
+  .item {
+    .left-select {
+      width: 100%;
+      display: flex;
+      gap: 30px;
+      .width-full {
+        width: 100%;
+      }
+    }
+    .MuiPaper-root {
+      height: 40px;
+      margin: 8px 8px 8px 0;
+      max-width: 350px;
+    }
+  }
+
+  .title-box {
+    font-family: "Nunito";
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #282739;
+  }
+
+  .MuiFormControl-root {
+    margin-left: 0;
+  }
+
+  .table {
+    display: flex;
+    justify-content: space-between;
+    .main-table {
+      th {
+        border-right: 1px solid #fff;
+        color: white;
+        font-family: "Nunito";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .css-1ex1afd-MuiTableCell-root {
+        border-bottom: none;
+      }
+
+      filter: drop-shadow(2px 2px 8px rgba(232, 239, 244, 0.8));
+      border-radius: 12px;
+      width: calc(100% - 104px);
+      thead {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: rgb(255, 145, 56);
+      }
+      tbody {
+        background: white;
+
+        tr {
+          height: 50px;
+        }
+        td {
+          border-right: 1px solid #ffe3cd;
+          .text-part {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
+      }
+
+      .MuiTableCell-root {
+        max-width: 250px;
+      }
+    }
+  }
+
+  .add-device {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 4px;
+    gap: 4px;
+    width: 80px;
+    height: 94px;
+    background: #fff2e7;
+    box-shadow: 0px 0px 6px #e7e9f2;
+    border-radius: 8px 0px 0px 8px;
+    font-family: "Nunito";
+    font-style: normal;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    color: #ff7506;
+  }
+
+}

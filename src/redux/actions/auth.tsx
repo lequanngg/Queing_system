@@ -9,11 +9,7 @@ export const AuthenticateAction = createAsyncThunk(
     password,
     rememberClient,
   }: IAuthenticateReq) => {
-    const response = await AuthenticateApi({
-      userNameOrEmailAddress,
-      password,
-      rememberClient,
-    });
+    const response = await AuthenticateApi();
     return response;
   }
 );
