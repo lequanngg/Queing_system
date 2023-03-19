@@ -1,5 +1,10 @@
 .device {
   margin-right: 24px;
+
+  .css-1ex1afd-MuiTableCell-root {
+    padding: 0 16px;
+  }
+
   .full-item {
     justify-content: space-between;
   }
@@ -10,7 +15,7 @@
     width: 40%;
     display: flex;
     justify-content: end;
-    margin-right: 100px;
+    margin-right: 106px;
     .item-2-content {
       width: 350px;
     }
@@ -113,5 +118,34 @@
     cursor: pointer;
     color: #ff7506;
   }
+}
 
+.full-item {
+  .css-1xhypcz-MuiStack-root {
+    gap: 20px;
+  }
+  
+  .css-1xhypcz-MuiStack-root>.MuiTextField-root {
+    min-width: 162px;
+  }
+
+  .MuiFormControl-root {
+    background-color: white;
+    overflow-y: hidden;
+  }
+  .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 8px;
+  }
+
+  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+    padding: 0;
+    gap: 6px;
+  }
+
+  .MuiInputBase-input {
+    order: 1;
+  }
+  .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    padding: 0;
+  }
 }
