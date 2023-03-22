@@ -166,3 +166,127 @@
     }
   }
 }
+
+.add-device {
+  span {
+    color: #ff4747;
+  }
+  .full-item {
+    background: #ffffff;
+    box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
+    border-radius: 16px;
+    margin-right: 24px;
+    padding: 16px 24px;
+    .title-small {
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 30px;
+      color: #ff7506;
+      margin-bottom: 20px;
+    }
+    .css-18i6d6z {
+      margin-left: 8px;
+    }
+    .row-content {
+      padding-top: 16px;
+      input {
+        height: 44px;
+        padding: 0;
+        padding: 0 12px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #a9a9b0;
+      }
+
+      .sub-title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        display: flex;
+        align-items: center;
+        color: #282739;
+      }
+
+      .MuiSelect-select {
+        height: 44px;
+        padding: 0;
+        padding: 0 12px;
+
+        display: flex;
+        align-items: center;
+      }
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      .MuiFormControl-root {
+        width: 100%;
+      }
+      .left-row {
+        width: calc(50% - 24px);
+      }
+      .right-row {
+        width: calc(50% - 24px);
+      }
+    }
+    .row-end {
+      .left-row {
+        width: 100%;
+      }
+    }
+    .text-bottom {
+      padding-bottom: 93px;
+      padding-top: 18px;
+    }
+  }
+  .btn-submit {
+    display: flex;
+    gap: 56px;
+    padding-top: 24px;
+    margin: 0 auto;
+    .cancel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 147px;
+      height: 48px;
+      left: 0px;
+      top: 0px;
+      background: #fff2e7;
+      border: 1.5px solid #ff9138;
+      box-shadow: 0px 0px 6px #e7e9f2;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      color: #ff9138;
+      cursor: pointer;
+    }
+    .submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 148px;
+      height: 48px;
+      left: 179px;
+      top: 0px;
+      background: #ff9138;
+      box-shadow: 0px 0px 6px #e7e9f2;
+      border-radius: 8px;
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
+    }
+  }
+}

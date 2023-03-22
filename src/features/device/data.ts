@@ -18,3 +18,4 @@ rows.forEach((row) => {
   row.trangThaiKetNoi = randomNum2 < 0.5 ? "Mất kết nối" : "Đang kết nối";
 });
 
+export let infoRow = [{}]

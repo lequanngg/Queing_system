@@ -1,5 +1,5 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,7 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddSquare from "../../assets/svg/add-square.svg";
 import Red from "../../assets/svg/red.svg";
 import Green from "../../assets/svg/green.svg";
-import { rows } from "./data";
+import { infoRow, rows } from "./data";
 
 import {
   Table,
@@ -23,6 +23,7 @@ import {
   TablePagination,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -92,6 +93,8 @@ const MainHome = styled.div`
 `;
 
 const Device = () => {
+  const [expandedRow, setExpandedRow] = useState(-1);
+  const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
 
@@ -112,6 +115,11 @@ const Device = () => {
   };
   const handleChangeConnect = (event: SelectChangeEvent) => {
     setOption2(event.target.value as string);
+  };
+
+  const handleOpenText = (index: number) => {
+    setExpandedRow(index);
+    // console.log(row.dichVuSuDung);
   };
 
   return (
@@ -257,25 +265,45 @@ const Device = () => {
                           />{" "}
                           {row.trangThaiKetNoi}
                         </TableCell>
-                        <TableCell>
-                          <div className="text-part">{row.dichVuSuDung}</div>
-                          <div
-                            style={{
-                              color: "#4277FF",
-                              textDecoration: "underline",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Xem thêm
-                          </div>
-                        </TableCell>
+                        {expandedRow === index ? (
+                          <TableCell>
+                            <div>{row.dichVuSuDung}</div>
+                          </TableCell>
+                        ) : (
+                          <TableCell>
+                            <div className="text-part">{row.dichVuSuDung}</div>
+                            {row.dichVuSuDung.length > 30 && (
+                              <div
+                                style={{
+                                  color: "#4277FF",
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => handleOpenText(index)}
+                              >
+                                Xem thêm
+                              </div>
+                            )}
+                          </TableCell>
+                        )}
+
                         <TableCell
                           style={{
                             color: "#4277FF",
                             textDecoration: "underline",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.x}</div>
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              infoRow.length = 0;
+                              infoRow.push(row);
+                              console.log(infoRow);
+                              alert(row.dichVuSuDung);
+                            }}
+                          >
+                            {row.x}
+                          </div>
                         </TableCell>
                         <TableCell
                           style={{
@@ -284,7 +312,17 @@ const Device = () => {
                             cursor: "pointer",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.y}</div>
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              infoRow.length = 0;
+                              infoRow.push(row);
+                              console.log(infoRow);
+                              alert(row.dichVuSuDung);
+                            }}
+                          >
+                            {row.y}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -300,7 +338,10 @@ const Device = () => {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </div>
-            <div className="add-device">
+            <div
+              className="add-device"
+              onClick={() => navigate("/home/themthietbi")}
+            >
               {" "}
               <img src={AddSquare} alt="" />
               <div className="add-device-1">Thêm thiết bị</div>

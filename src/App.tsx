@@ -14,6 +14,8 @@ import "./assets/scss/style.scss";
 import Role from "./features/systemInstallation/Role";
 import Account from "./features/systemInstallation/Account";
 import Diary from "./features/systemInstallation/Diary";
+import AddDevice from "./features/device/AddDevice";
+
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="profile" element={<Profile />} />
           <Route path="thietbi" element={<Device />} />
+          <Route path="themthietbi" element={<AddDevice />} />
           <Route path="dichvu" element={<Service />} />
           <Route path="capso" element={<NumberLever />} />
           <Route path="baocao" element={<Report />} />

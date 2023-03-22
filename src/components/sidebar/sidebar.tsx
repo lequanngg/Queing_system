@@ -120,6 +120,7 @@ const Sidebar: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    // event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -276,10 +277,10 @@ const Sidebar: React.FC = () => {
               />
             </ListItemButton>
           </StyleLink>
-          <StyleLink to="/home/caidathethong">
+          <StyleLink to="/home/quanlyvaitro">
             <ListItemButton
               style={
-                location.pathname === "/home/caidathethong"
+                location.pathname === "/home/quanlyvaitro" || location.pathname === "/home/quanlytaikhoan"  || location.pathname === "/home/nhatkyhoatdong"
                   ? {
                       background: "#FF9138",
                     }
