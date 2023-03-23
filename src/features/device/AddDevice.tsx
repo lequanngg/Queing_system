@@ -8,6 +8,9 @@ import { Box, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { rows } from "./data";
 import { useNavigate } from "react-router-dom";
+import { ref, set } from "firebase/database";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../hooks/config";
 
 const TitleDevice = styled.div`
   font-style: normal;
@@ -31,18 +34,25 @@ const AddDevice = () => {
   };
   const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    rows.unshift({
-      tenThietBi: age,
-      diaChiIP: data.a4,
-      dichVuSuDung: data.a3,
-      maThietBi: data.a1,
-      trangThaiHoatDong: "Đang hoạt động",
-      trangThaiKetNoi: 'Kết nối',
-      x: "Chi tiết",
-      y: "Cập nhật",
-    });
-    navigate('/home/thietbi')
+  const onSubmit = async (data: any) => {
+    try {
+      const docRef = await addDoc(collection(db, "device"), {
+        tenThietBi: age,
+        diaChiIP: data.a4,
+        dichVuSuDung: data.a3,
+        maThietBi: data.a1,
+        trangThaiHoatDong: "Đang hoạt động",
+        trangThaiKetNoi: "Kết nối",
+        chiTiet: "Chi tiết",
+        capNhat: "Cập nhật",
+        tenDangNhap: "ten dang nhap",
+        matKhau: "mat khau"
+      });
+      // console.log("Document written with ID: ", docRef.id);
+      navigate("/home/thietbi");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

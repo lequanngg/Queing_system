@@ -18,4 +18,16 @@ rows.forEach((row) => {
   row.trangThaiKetNoi = randomNum2 < 0.5 ? "Mất kết nối" : "Đang kết nối";
 });
 
-export let infoRow = [{}]
+export let infoRow = {
+  diaChiIP: "192.168.1.10",
+  dichVuSuDung:
+    "Khám tim mạch, Khám Sản - Phụ khoa, Khám răng hàm mặt, Khám tai mũi họng, Khám hô hấp, Khám tổng quát",
+  maThietBi: "KIO_01",
+  tenThietBi: "Kiosk",
+  matKhau: "password",
+  tenDangNhap: "meo meo",
+  trangThaiHoatDong: "Ngưng hoạt động",
+  trangThaiKetNoi: "Đang kết nối",
+  x: "Chi tiết",
+  y: "Cập nhật",
+};

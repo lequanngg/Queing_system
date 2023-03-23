@@ -15,6 +15,7 @@ import Role from "./features/systemInstallation/Role";
 import Account from "./features/systemInstallation/Account";
 import Diary from "./features/systemInstallation/Diary";
 import AddDevice from "./features/device/AddDevice";
+import DetailDevice from "./features/device/DetailDevice";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="thietbi" element={<Device />} />
           <Route path="themthietbi" element={<AddDevice />} />
+          <Route path="chitietthietbi" element={<DetailDevice />} />
           <Route path="dichvu" element={<Service />} />
           <Route path="capso" element={<NumberLever />} />
           <Route path="baocao" element={<Report />} />

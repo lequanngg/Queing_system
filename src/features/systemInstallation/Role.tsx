@@ -1,31 +1,22 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
 import { useState } from "react";
 import styled from "styled-components";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import AddSquare from "../../assets/svg/add-square.svg";
-import Red from "../../assets/svg/red.svg";
-import Green from "../../assets/svg/green.svg";
 import { rows1 } from "./data";
 import dayjs, { Dayjs } from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 
 import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  TablePagination,
   Paper,
 } from "@mui/material";
 
@@ -97,28 +88,8 @@ const MainHome = styled.div`
 `;
 
 const Role = () => {
-  const [value, setValue] = useState<Dayjs | null>(dayjs("2022-04-17"));
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
-
-  const handleChangePage = (event: any, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: any) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const [option1, setOption1] = useState("");
-  const [option2, setOption2] = useState("");
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setOption1(event.target.value as string);
-  };
-  const handleChangeConnect = (event: SelectChangeEvent) => {
-    setOption2(event.target.value as string);
-  };
 
   return (
     <div className="device">

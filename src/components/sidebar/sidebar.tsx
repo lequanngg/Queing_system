@@ -13,7 +13,6 @@ import HomeIcon from "../../assets/svg/dashboard.svg";
 import ThietBiIcon from "../../assets/svg/5.svg";
 import DichVuIcon from "../../assets/svg/3.svg";
 import CapSoIcon from "../../assets/svg/4.svg";
-import BaoCaoIcon from "../../assets/svg/baocao.svg";
 import CaiDatHeThongIcon from "../../assets/svg/setting.svg";
 import logout from "../../assets/svg/2.svg";
 import More from "../../assets/svg/more.svg";
@@ -263,7 +262,7 @@ const Sidebar: React.FC = () => {
               }
             >
               <ListItemIcon>
-                <img src={BaoCaoIcon} />
+                <img src={CapSoIcon} />
               </ListItemIcon>
               <ListItemTextStyle
                 primary="Báo cáo"

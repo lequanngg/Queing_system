@@ -24,6 +24,9 @@ import {
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../hooks/config";
+import { doc, getDoc } from "firebase/firestore";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -121,6 +124,19 @@ const Device = () => {
     setExpandedRow(index);
     // console.log(row.dichVuSuDung);
   };
+
+  const docRef = doc(db, "device");
+  const getData = async () => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  };
+  getData()
+
+  
 
   return (
     <div className="device">
@@ -296,10 +312,15 @@ const Device = () => {
                           <div
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                              infoRow.length = 0;
-                              infoRow.push(row);
-                              console.log(infoRow);
-                              alert(row.dichVuSuDung);
+                              infoRow.maThietBi = row.maThietBi;
+                              infoRow.diaChiIP = row.diaChiIP;
+                              infoRow.dichVuSuDung = row.dichVuSuDung;
+                              infoRow.tenThietBi = row.tenThietBi;
+                              infoRow.trangThaiHoatDong = row.trangThaiHoatDong;
+                              infoRow.trangThaiKetNoi = row.trangThaiKetNoi;
+                              infoRow.x = row.x;
+                              infoRow.y = row.y;
+                              navigate("/home/chitietthietbi");
                             }}
                           >
                             {row.x}
@@ -314,12 +335,12 @@ const Device = () => {
                         >
                           <div
                             style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              infoRow.length = 0;
-                              infoRow.push(row);
-                              console.log(infoRow);
-                              alert(row.dichVuSuDung);
-                            }}
+                            // onClick={() => {
+                            //   infoRow.length = 0;
+                            //   infoRow.push(row);
+                            //   console.log(infoRow);
+                            //   alert(row.dichVuSuDung);
+                            // }}
                           >
                             {row.y}
                           </div>
