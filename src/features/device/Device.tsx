@@ -11,22 +11,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddSquare from "../../assets/svg/add-square.svg";
 import Red from "../../assets/svg/red.svg";
 import Green from "../../assets/svg/green.svg";
-import { infoRow, rows } from "./data";
 
 import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   TablePagination,
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { onValue, ref } from "firebase/database";
 import { db } from "../../hooks/config";
-import { doc, getDoc } from "firebase/firestore";
+import { query, collection, getDocs } from "firebase/firestore";
+import { useAppDispatch } from "../../redux/reducer/store";
+import { deviceDetail } from "../../redux/actions/device";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -96,11 +95,12 @@ const MainHome = styled.div`
 `;
 
 const Device = () => {
+  const [rowsData, setRowsData] = useState<any>([]);
   const [expandedRow, setExpandedRow] = useState(-1);
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
-
+  const dispatch = useAppDispatch();
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
@@ -125,18 +125,21 @@ const Device = () => {
     // console.log(row.dichVuSuDung);
   };
 
-  const docRef = doc(db, "device");
-  const getData = async () => {
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-  };
-  getData()
+  const queryDocument = query(collection(db, "device"));
 
-  
+  const getData = async () => {
+    let row: any[] = [];
+    const querySnapshot = await getDocs(queryDocument);
+    querySnapshot.forEach((item) => {
+      const data = item.data();
+      data.id = item.id;
+      row.push(data);
+    });
+    setRowsData(row);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="device">
@@ -243,9 +246,9 @@ const Device = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                  {rowsData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => (
+                    .map((row: any, index: number) => (
                       <TableRow
                         key={index}
                         style={
@@ -288,7 +291,7 @@ const Device = () => {
                         ) : (
                           <TableCell>
                             <div className="text-part">{row.dichVuSuDung}</div>
-                            {row.dichVuSuDung.length > 30 && (
+                            {row.dichVuSuDung?.length > 30 && (
                               <div
                                 style={{
                                   color: "#4277FF",
@@ -312,18 +315,11 @@ const Device = () => {
                           <div
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                              infoRow.maThietBi = row.maThietBi;
-                              infoRow.diaChiIP = row.diaChiIP;
-                              infoRow.dichVuSuDung = row.dichVuSuDung;
-                              infoRow.tenThietBi = row.tenThietBi;
-                              infoRow.trangThaiHoatDong = row.trangThaiHoatDong;
-                              infoRow.trangThaiKetNoi = row.trangThaiKetNoi;
-                              infoRow.x = row.x;
-                              infoRow.y = row.y;
-                              navigate("/home/chitietthietbi");
+                              dispatch(deviceDetail("row"));
+                              navigate(`/home/chitietthietbi?${row.id}`);
                             }}
                           >
-                            {row.x}
+                            {row.chiTiet}
                           </div>
                         </TableCell>
                         <TableCell
@@ -342,7 +338,7 @@ const Device = () => {
                             //   alert(row.dichVuSuDung);
                             // }}
                           >
-                            {row.y}
+                            {row.capNhat}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -351,7 +347,7 @@ const Device = () => {
               </Table>
               <TablePagination
                 component="div"
-                count={rows.length}
+                count={rowsData?.length || 0}
                 page={page}
                 rowsPerPage={rowsPerPage}
                 rowsPerPageOptions={[10]}

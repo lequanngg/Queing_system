@@ -1,15 +1,14 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { rows } from "./data";
 import { useNavigate } from "react-router-dom";
 import { ref, set } from "firebase/database";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../hooks/config";
 
 const TitleDevice = styled.div`
@@ -28,7 +27,8 @@ const AddDevice = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [age, setAge] = useState("");
+  const [infoRow, setInfoRow] = useState<any>({});
+  const [age, setAge] = useState(infoRow.tenThietBi || "Kiosk");
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
@@ -36,24 +36,40 @@ const AddDevice = () => {
 
   const onSubmit = async (data: any) => {
     try {
+      console.log(data, "data");
       const docRef = await addDoc(collection(db, "device"), {
         tenThietBi: age,
         diaChiIP: data.a4,
-        dichVuSuDung: data.a3,
+        dichVuSuDung: data.a6,
         maThietBi: data.a1,
         trangThaiHoatDong: "Đang hoạt động",
         trangThaiKetNoi: "Kết nối",
         chiTiet: "Chi tiết",
         capNhat: "Cập nhật",
-        tenDangNhap: "ten dang nhap",
-        matKhau: "mat khau"
+        tenDangNhap: data.a3,
+        matKhau: data.a5,
       });
-      // console.log("Document written with ID: ", docRef.id);
       navigate("/home/thietbi");
     } catch (e) {
       console.log(e);
     }
   };
+
+  const getData = async () => {
+    if (window.location.search.substring(1)) {
+      const docRef = doc(db, "device", window.location.search.substring(1));
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setInfoRow(docSnap.data());
+        console.log("Document data:", docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="add-device">
@@ -79,7 +95,7 @@ const AddDevice = () => {
                     variant="outlined"
                     id="outlined-basic"
                     {...register("a1", { required: true })}
-                    placeholder="Nhập mã thiết bị"
+                    placeholder={infoRow.maThietBi || "Nhập mã thiết bị"}
                     required
                   />
                 </div>
@@ -114,10 +130,11 @@ const AddDevice = () => {
                   </div>
 
                   <TextField
+                    defaultValue={infoRow.tenThietBi || ""}
                     variant="outlined"
                     id="outlined-basic"
                     {...register("a2", { required: true })}
-                    placeholder="Nhập tên thiết bị"
+                    placeholder={infoRow.tenThietBi || "Nhập tên thiết bị"}
                     required
                   />
                 </div>
@@ -128,9 +145,10 @@ const AddDevice = () => {
 
                   <TextField
                     variant="outlined"
+                    defaultValue={infoRow.tenDangNhap || ""}
+                    placeholder={infoRow.tenDangNhap || "Nhập tài khoản"}
                     {...register("a3", { required: true })}
                     id="outlined-basic"
-                    placeholder="Nhập tài khoản"
                     required
                   />
                 </div>
@@ -143,10 +161,11 @@ const AddDevice = () => {
 
                   <TextField
                     variant="outlined"
+                    defaultValue={infoRow.diaChiIP || ""}
                     id="outlined-basic"
                     {...register("a4", { required: true })}
                     required
-                    placeholder="Nhập địa chỉ IP"
+                    placeholder={infoRow.diaChiIP || "Nhập địa chỉ IP"}
                   />
                 </div>
                 <div className="right-row">
@@ -156,10 +175,11 @@ const AddDevice = () => {
 
                   <TextField
                     {...register("a5", { required: true })}
+                    placeholder={infoRow.matKhau || "Nhập mật khẩu"}
+                    defaultValue={infoRow.matKhau || ""}
                     variant="outlined"
                     id="outlined-basic"
                     required
-                    placeholder="Nhập mật khẩu"
                   />
                 </div>
               </div>
@@ -171,10 +191,11 @@ const AddDevice = () => {
 
                   <TextField
                     variant="outlined"
+                    defaultValue={infoRow.dichVuSuDung || ""}
                     {...register("a6", { required: true })}
+                    placeholder={infoRow.dichVuSuDung || "Nhập dịch vụ sử dụng"}
                     required
                     id="outlined-basic"
-                    placeholder="Nhập dịch vụ sử dụng"
                   />
                 </div>
               </div>
@@ -186,7 +207,9 @@ const AddDevice = () => {
               <div className="btn-submit">
                 <div className="cancel">Hủy bỏ</div>{" "}
                 <button className="submit" type="submit">
-                  Thêm thiết bị
+                  {window.location.search.substring(1)
+                    ? "Cập Nhật"
+                    : "Thêm thiết bị"}
                 </button>
               </div>
             </div>

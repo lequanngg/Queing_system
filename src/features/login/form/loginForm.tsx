@@ -9,7 +9,6 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { AuthenticateAction } from "../../../redux/actions/auth";
 import { FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";

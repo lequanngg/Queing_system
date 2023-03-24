@@ -1,5 +1,5 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,8 +7,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import AddSquare from "../../assets/svg/add-square.svg";
-import { infoRow, rows } from "./data";
-import { useNavigate } from "react-router-dom";
+import { Router, useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../hooks/config";
 
 const TitleDevice = styled.div`
   font-style: normal;
@@ -31,6 +32,22 @@ const DetailDevice = () => {
     setAge(event.target.value as string);
   };
   const navigate = useNavigate();
+
+  const [infoRow, setInfoRow] = useState<any>({});
+  const docRef = doc(db, "device", window.location.search.substring(1));
+
+  const getData = async () => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setInfoRow(docSnap.data());
+      console.log("Document data:", setInfoRow(docSnap.data()));
+    } else {
+      console.log("No such document!");
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="detail-device">
@@ -55,7 +72,7 @@ const DetailDevice = () => {
                       variant="outlined"
                       id="outlined-basic"
                       disabled
-                      value={infoRow.maThietBi || ""}
+                      value={infoRow?.maThietBi || ""}
                       placeholder="Nhập mã thiết bị"
                       required
                     />
@@ -143,7 +160,7 @@ const DetailDevice = () => {
               </div>
               <div
                 className="add-device update-device-btn"
-                onClick={() => navigate("/home/themthietbi")}
+                onClick={() => navigate(`/home/themthietbi?${window.location.search.substring(1)}`)}
               >
                 {" "}
                 <img src={AddSquare} alt="" />

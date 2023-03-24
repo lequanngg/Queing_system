@@ -293,6 +293,7 @@
 
 .detail-device {
   .update-device-btn {
+    cursor: pointer;
     width: 80px;
     height: 94px;
     background: #fff2e7;
@@ -358,4 +359,8 @@
   input {
     padding: 0;
   }
+}
+
+.add-device .full-item .row-content input::-webkit-input-placeholder {
+  color: #535261;
 }
