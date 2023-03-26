@@ -10,7 +10,6 @@ import AddSquare from "../../assets/svg/add-square.svg";
 import { rows1 } from "./data";
 import dayjs, { Dayjs } from "dayjs";
 
-
 import {
   Table,
   TableBody,
@@ -19,6 +18,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -90,6 +90,7 @@ const MainHome = styled.div`
 const Role = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
+  const navigate = useNavigate();
 
   return (
     <div className="device">
@@ -209,17 +210,25 @@ const Role = () => {
                             cursor: "pointer",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.y}</div>
+                          <div
+                            onClick={() => navigate("/home/chitietvaitro?test")}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {row.y}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
             </div>
-            <div className="add-device">
+            <div
+              className="add-device"
+              onClick={() => navigate("/home/themvaitro")}
+            >
               {" "}
               <img src={AddSquare} alt="" />
-              <div className="add-device-1">Thêm dịch vụ</div>
+              <div className="add-device-1">Thêm vai trò</div>
             </div>
           </div>
         </div>

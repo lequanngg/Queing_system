@@ -28,6 +28,7 @@ import {
   TablePagination,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -97,6 +98,8 @@ const MainHome = styled.div`
 `;
 
 const Account = () => {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState<Dayjs | null>(dayjs("2022-04-17"));
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
@@ -240,7 +243,14 @@ const Account = () => {
                             cursor: "pointer",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.y}</div>
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              navigate("/home/chitiettaikhoan?test")
+                            }
+                          >
+                            {row.y}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -259,7 +269,12 @@ const Account = () => {
             <div className="add-device">
               {" "}
               <img src={AddSquare} alt="" />
-              <div className="add-device-1">Thêm dịch vụ</div>
+              <div
+                className="add-device-1"
+                onClick={() => navigate("/home/themtaikhoan")}
+              >
+                Thêm tài khoản
+              </div>
             </div>
           </div>
         </div>

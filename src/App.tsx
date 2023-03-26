@@ -20,6 +20,8 @@ import AddService from "./features/service/AddService";
 import DetailService from "./features/service/DetailService";
 import AddNumber from "./features/numberLever/AddNumber";
 import DetailNumber from "./features/numberLever/DetailNumber";
+import AddRole from "./features/systemInstallation/AddRole";
+import AddAccount from "./features/systemInstallation/AddAccount";
 
 
 function App() {
@@ -41,7 +43,11 @@ function App() {
           <Route path="chitietcapso" element={<DetailNumber />} />
           <Route path="baocao" element={<Report />} />
           <Route path="quanlyvaitro" element={<Role />} />
+          <Route path="themvaitro" element={<AddRole />} />
+          <Route path="chitietvaitro" element={<AddRole />} />
           <Route path="quanlytaikhoan" element={<Account />} />
+          <Route path="themtaikhoan" element={<AddAccount />} />
+          <Route path="chitiettaikhoan" element={<AddAccount />} />
           <Route path="nhatkyhoatdong" element={<Diary />} />
           <Route
             path="caidathethong/*"
