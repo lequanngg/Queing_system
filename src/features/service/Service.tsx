@@ -1,5 +1,5 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,23 +11,24 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddSquare from "../../assets/svg/add-square.svg";
 import Red from "../../assets/svg/red.svg";
 import Green from "../../assets/svg/green.svg";
-import { rows } from "./data";
 import dayjs, { Dayjs } from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { query, collection, getDocs } from "firebase/firestore";
 
 import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   TablePagination,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../hooks/config";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -97,6 +98,8 @@ const MainHome = styled.div`
 `;
 
 const Service = () => {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState<Dayjs | null>(dayjs("2022-04-17"));
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
@@ -119,6 +122,21 @@ const Service = () => {
   const handleChangeConnect = (event: SelectChangeEvent) => {
     setOption2(event.target.value as string);
   };
+  const [rowsData, setRowsData] = useState<any>([]);
+  const queryDocument = query(collection(db, "service"));
+  const getData = async () => {
+    let row: any[] = [];
+    const querySnapshot = await getDocs(queryDocument);
+    querySnapshot.forEach((item) => {
+      const data = item.data();
+      data.id = item.id;
+      row.push(data);
+    });
+    setRowsData(row);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="device">
@@ -157,9 +175,7 @@ const Service = () => {
                   <div className="title-box">Chọn Thời Gian</div>
                   <LocalizationProvider dateAdapter={AdapterDayjs} size="small">
                     <DemoContainer components={["DatePicker", "DatePicker"]}>
-                      <DatePicker
-                        defaultValue={dayjs("2022-04-17")}
-                      />
+                      <DatePicker defaultValue={dayjs("2022-04-17")} />
                       <DatePicker
                         value={value}
                         onChange={(newValue: any) => setValue(newValue)}
@@ -217,9 +233,9 @@ const Service = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                  {rowsData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => (
+                    .map((row: any, index: number) => (
                       <TableRow
                         key={index}
                         style={
@@ -230,19 +246,19 @@ const Service = () => {
                             : {}
                         }
                       >
-                        <TableCell>{row.maThietBi}</TableCell>
-                        <TableCell>{row.tenThietBi}</TableCell>
+                        <TableCell>{row.maDichVu}</TableCell>
+                        <TableCell>{row.tenDichVu}</TableCell>
                         <TableCell>{row.moTa}</TableCell>
                         <TableCell>
                           <img
                             src={
-                              row.trangThaiHoatDong === "Ngưng hoạt động"
+                              row.moTa === "Ngưng hoạt động"
                                 ? Red
                                 : Green
                             }
                             alt=""
                           />{" "}
-                          {row.trangThaiHoatDong}
+                          {row.moTa}
                         </TableCell>
                         <TableCell
                           style={{
@@ -250,7 +266,12 @@ const Service = () => {
                             textDecoration: "underline",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.x}</div>
+                          <div
+                            onClick={() => navigate(`/home/chitietdichvu?${row.id}`)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            Chi tiết
+                          </div>
                         </TableCell>
                         <TableCell
                           style={{
@@ -259,7 +280,9 @@ const Service = () => {
                             cursor: "pointer",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.y}</div>
+                          <div style={{ cursor: "pointer" }}
+                          onClick={() => navigate(`/home/themdichvu?${row.id}`)}
+                          >Cập Nhật</div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -267,7 +290,7 @@ const Service = () => {
               </Table>
               <TablePagination
                 component="div"
-                count={rows.length}
+                count={rowsData.length}
                 page={page}
                 rowsPerPage={rowsPerPage}
                 rowsPerPageOptions={[10]}
@@ -275,7 +298,10 @@ const Service = () => {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </div>
-            <div className="add-device">
+            <div
+              className="add-device"
+              onClick={() => navigate("/home/themdichvu")}
+            >
               {" "}
               <img src={AddSquare} alt="" />
               <div className="add-device-1">Thêm dịch vụ</div>

@@ -1,5 +1,5 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,7 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddSquare from "../../assets/svg/add-square.svg";
 import Red from "../../assets/svg/red.svg";
 import Green from "../../assets/svg/green.svg";
-import { rows } from "./data";
+import { query, collection, getDocs } from "firebase/firestore";
 
 import {
   Table,
@@ -23,6 +23,8 @@ import {
   TablePagination,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../hooks/config";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -92,6 +94,8 @@ const MainHome = styled.div`
 `;
 
 const NumberLever = () => {
+  const navigate = useNavigate();
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
 
@@ -113,7 +117,23 @@ const NumberLever = () => {
   const handleChangeConnect = (event: SelectChangeEvent) => {
     setOption2(event.target.value as string);
   };
+  const [rowsData, setRowsData] = useState<any>([]);
 
+  const queryDocument = query(collection(db, "number"));
+
+  const getData = async () => {
+    let row: any[] = [];
+    const querySnapshot = await getDocs(queryDocument);
+    querySnapshot.forEach((item) => {
+      const data = item.data();
+      data.id = item.id;
+      row.push(data);
+    });
+    setRowsData(row);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="device">
       <HeadMainView
@@ -219,9 +239,9 @@ const NumberLever = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                  {rowsData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => (
+                    .map((row: any, index: number) => (
                       <TableRow
                         key={index}
                         style={
@@ -235,8 +255,8 @@ const NumberLever = () => {
                         <TableCell>{row.soThuTu}</TableCell>
                         <TableCell>{row.tenKhachHang}</TableCell>
                         <TableCell>{row.tenDichVu}</TableCell>
-                        <TableCell>{row.thoigiancap}</TableCell>
-                        <TableCell>{row.hansudung}</TableCell>
+                        <TableCell>{row.thoiGianCap}</TableCell>
+                        <TableCell>{row.hanSuDung}</TableCell>
                         <TableCell>
                           <img
                             src={row.trangThai === "Đang chờ" ? Red : Green}
@@ -251,7 +271,14 @@ const NumberLever = () => {
                             textDecoration: "underline",
                           }}
                         >
-                          <div style={{ cursor: "pointer" }}>{row.x}</div>
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              navigate(`/home/chitietcapso?${row.id}`)
+                            }
+                          >
+                            Chi tiết
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -259,7 +286,7 @@ const NumberLever = () => {
               </Table>
               <TablePagination
                 component="div"
-                count={rows.length}
+                count={rowsData.length}
                 page={page}
                 rowsPerPage={rowsPerPage}
                 rowsPerPageOptions={[10]}
@@ -267,7 +294,10 @@ const NumberLever = () => {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </div>
-            <div className="add-device">
+            <div
+              className="add-device"
+              onClick={() => navigate("/home/capsomoi")}
+            >
               {" "}
               <img src={AddSquare} alt="" />
               <div className="add-device-1">Cấp số mới</div>

@@ -16,6 +16,10 @@ import Account from "./features/systemInstallation/Account";
 import Diary from "./features/systemInstallation/Diary";
 import AddDevice from "./features/device/AddDevice";
 import DetailDevice from "./features/device/DetailDevice";
+import AddService from "./features/service/AddService";
+import DetailService from "./features/service/DetailService";
+import AddNumber from "./features/numberLever/AddNumber";
+import DetailNumber from "./features/numberLever/DetailNumber";
 
 
 function App() {
@@ -30,7 +34,11 @@ function App() {
           <Route path="themthietbi" element={<AddDevice />} />
           <Route path="chitietthietbi" element={<DetailDevice />} />
           <Route path="dichvu" element={<Service />} />
+          <Route path="themdichvu" element={<AddService />} />
+          <Route path="chitietdichvu" element={<DetailService />} />
           <Route path="capso" element={<NumberLever />} />
+          <Route path="capsomoi" element={<AddNumber />} />
+          <Route path="chitietcapso" element={<DetailNumber />} />
           <Route path="baocao" element={<Report />} />
           <Route path="quanlyvaitro" element={<Role />} />
           <Route path="quanlytaikhoan" element={<Account />} />
