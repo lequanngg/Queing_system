@@ -211,7 +211,7 @@ const Device = () => {
                   >
                     <InputBase
                       sx={{ ml: 1, flex: 1 }}
-                      placeholder="Search Google Maps"
+                      placeholder="Nhập từ khóa"
                       inputProps={{ "aria-label": "search google maps" }}
                     />
                     <IconButton
@@ -337,6 +337,11 @@ const Device = () => {
                             //   console.log(infoRow);
                             //   alert(row.dichVuSuDung);
                             // }}
+                            onClick={() => {
+                              dispatch(deviceDetail("row"));
+                              navigate(`/home/themthietbi?${row.id}`);
+                            }}
+                            
                           >
                             {row.capNhat}
                           </div>

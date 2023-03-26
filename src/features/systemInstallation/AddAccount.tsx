@@ -117,7 +117,9 @@ const AddAccount = () => {
                       {...register("a1", { required: true })}
                       placeholder={infoRow.maDichVu || "Nhập họ tên"}
                       defaultValue={
-                        window.location.search.substring(1) ? "Nguyen Van A" : ""
+                        window.location.search.substring(1)
+                          ? "Nguyen Van A"
+                          : ""
                       }
                     />
                   </div>
@@ -149,7 +151,9 @@ const AddAccount = () => {
                       {...register("a3", { required: true })}
                       placeholder={infoRow.maDichVu || "Nhập mã dịch vụ"}
                       defaultValue={
-                        window.location.search.substring(1) ? "NguyenA154@gmail.com" : ""
+                        window.location.search.substring(1)
+                          ? "NguyenA154@gmail.com"
+                          : ""
                       }
                     />
                   </div>
@@ -171,8 +175,10 @@ const AddAccount = () => {
                         <MenuItem value="">
                           <em>Tất cả</em>
                         </MenuItem>
-                        <MenuItem value={20}>Hoạt động</MenuItem>
-                        <MenuItem value={30}>Ngưng hoạt động</MenuItem>
+
+                        <MenuItem value={20}>Kế toán</MenuItem>
+                        <MenuItem value={30}>Quản lý</MenuItem>
+                        <MenuItem value={30}>Admin</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
@@ -193,7 +199,9 @@ const AddAccount = () => {
                       {...register("a4", { required: true })}
                       placeholder={infoRow.maDichVu || "Nhập mã dịch vụ"}
                       defaultValue={
-                        window.location.search.substring(1) ? "tuyetnguyen123" : ""
+                        window.location.search.substring(1)
+                          ? "tuyetnguyen123"
+                          : ""
                       }
                     />
                   </div>
@@ -208,7 +216,9 @@ const AddAccount = () => {
                       {...register("a5", { required: true })}
                       placeholder={infoRow.maDichVu || "Nhập mã dịch vụ"}
                       defaultValue={
-                        window.location.search.substring(1) ? "tuyetnguyen123" : ""
+                        window.location.search.substring(1)
+                          ? "tuyetnguyen123"
+                          : ""
                       }
                     />
                   </div>
@@ -223,7 +233,9 @@ const AddAccount = () => {
                       {...register("a6  ", { required: true })}
                       placeholder={infoRow.maDichVu || "Nhập mã dịch vụ"}
                       defaultValue={
-                        window.location.search.substring(1) ? "tuyetnguyen123" : ""
+                        window.location.search.substring(1)
+                          ? "tuyetnguyen123"
+                          : ""
                       }
                     />
                   </div>
@@ -245,9 +257,8 @@ const AddAccount = () => {
                         <MenuItem value="">
                           <em>Tất cả</em>
                         </MenuItem>
-                        <MenuItem value={20}>Kế toán</MenuItem>
-                        <MenuItem value={30}>Quản lý</MenuItem>
-                        <MenuItem value={30}>Admin</MenuItem>
+                        <MenuItem value={20}>Hoạt động</MenuItem>
+                        <MenuItem value={30}>Ngưng hoạt động</MenuItem>
                       </Select>
                     </FormControl>
                   </div>

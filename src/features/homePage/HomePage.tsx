@@ -24,6 +24,16 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  NativeSelect,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 const MainHome = styled.div`
   margin-top: -88px;
   display: flex;
@@ -124,6 +134,19 @@ const Chart = styled.div`
         color: #a9a9b0;
       }
     }
+    .right {
+      display: flex;  
+      align-items: center;
+      gap: 8px;
+      .MuiBox-root {
+        border-radius: 8px !important;
+        padding: 4px 8px !important;
+        border: 1.5px solid #D4D4D7 !important;
+      }
+      .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+        border: none;
+      }
+    }
   }
   .recharts-cartesian-grid-vertical {
     line {
@@ -160,6 +183,7 @@ const MainRight = styled.div`
       justify-content: space-between;
       margin-bottom: 12px;
       padding: 11px 16px;
+      cursor: pointer;
       display: flex;
       background: #ffffff;
       box-shadow: 2px 2px 15px rgba(70, 64, 67, 0.1);
@@ -225,7 +249,8 @@ const MainRight = styled.div`
     .react-calendar__month-view__weekdays__weekday {
       color: #ff7506;
     }
-    .react-calendar__navigation__arrow, .react-calendar__navigation__label {
+    .react-calendar__navigation__arrow,
+    .react-calendar__navigation__label {
       color: #ff7506;
     }
     .react-calendar__navigation__label__labelText {
@@ -234,12 +259,16 @@ const MainRight = styled.div`
     }
     .react-calendar__navigation {
       height: 60px;
-      border-bottom: 1px solid #DCDDFD
+      border-bottom: 1px solid #dcddfd;
     }
   }
 `;
 
 const HomePage = () => {
+  const [age, setAge] = useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
   const [value, onChange] = useState(new Date());
 
   const data = [
@@ -272,6 +301,7 @@ const HomePage = () => {
   }, []);
 
   console.log(widthChart, "widthChart");
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -280,7 +310,7 @@ const HomePage = () => {
         <div className="left-db">
           <div className="title">Biểu đồ cấp số</div>
           <div className="full-item">
-            <div className="item">
+            <div className="item" onClick={() => navigate("/home/capso")}>
               <div className="head-item">
                 <img src={Item1} alt="" />
                 <div className="title">Số thứ tự đã cấp</div>
@@ -292,7 +322,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="item">
+            <div className="item" onClick={() => navigate("/home/capso")}>
               <div className="head-item">
                 <img src={Item2} alt="" />
                 <div className="title">Số thứ tự đã cấp</div>
@@ -304,7 +334,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="item">
+            <div className="item" onClick={() => navigate("/home/capso")}>
               <div className="head-item">
                 <img src={Item3} alt="" />
                 <div className="title">Số thứ tự đã cấp</div>
@@ -316,7 +346,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="item">
+            <div className="item" onClick={() => navigate("/home/capso")}>
               <div className="head-item">
                 <img src={Item4} alt="" />
                 <div className="title">Số thứ tự đã cấp</div>
@@ -335,7 +365,24 @@ const HomePage = () => {
                 <div className="title">Bảng thống kê theo ngày</div>
                 <div className="des">Tháng 11/2021</div>
               </div>
-              <div className="right">Xem theo</div>
+              <div className="right">
+                <div>Xem theo</div>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <NativeSelect
+                      defaultValue={10}
+                      inputProps={{
+                        name: "age",
+                        id: "uncontrolled-native",
+                      }}
+                    >
+                      <option value={10}>Ngày</option>
+                      <option value={20}>Tuần</option>
+                      <option value={30}>Tháng</option>
+                    </NativeSelect>
+                  </FormControl>
+                </Box>
+              </div>
             </div>
             <AreaChart
               width={widthChart && widthChart - 48}
@@ -368,7 +415,7 @@ const HomePage = () => {
           <MainRight>
             <div className="title">Tổng quan</div>
             <div className="fullItem">
-              <div className="item">
+              <div className="item" onClick={() => navigate("/home/thietbi")}>
                 <div className="item-e">
                   <img src={Img1} alt="" />
                   <div className="center">
@@ -391,7 +438,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="item">
+              <div className="item" onClick={() => navigate("/home/dichvu")}>
                 <div className="item-e">
                   <img src={Img2} alt="" />
                   <div className="center">
@@ -413,7 +460,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="item">
+              <div className="item" onClick={() => navigate("/home/capso")}>
                 {" "}
                 <div className="item-e">
                   <img src={Img3} alt="" />

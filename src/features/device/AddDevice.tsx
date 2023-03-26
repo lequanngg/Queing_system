@@ -1,15 +1,47 @@
 import HeadMainView from "../../components/mainview/HeadMainView";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ref, set } from "firebase/database";
 import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../hooks/config";
+
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'Khám tim mạch',
+  'Khám sản phụ khoa',
+  'Khám răng hàm mặt',
+  'Khám tai mũi họng',
+  'Khám hô hấp',
+  'Khám tổng quát',
+];
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 const TitleDevice = styled.div`
   font-style: normal;
@@ -29,18 +61,15 @@ const AddDevice = () => {
   } = useForm();
   const [infoRow, setInfoRow] = useState<any>({});
   const [age, setAge] = useState(infoRow.tenThietBi || "Kiosk");
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     try {
-      console.log(data, "data");
+      console.log(data, personName, "data");
       const docRef = await addDoc(collection(db, "device"), {
         tenThietBi: age,
         diaChiIP: data.a4,
-        dichVuSuDung: data.a6,
+        dichVuSuDung: personName.toString(),
         maThietBi: data.a1,
         trangThaiHoatDong: "Đang hoạt động",
         trangThaiKetNoi: "Kết nối",
@@ -70,7 +99,18 @@ const AddDevice = () => {
   useEffect(() => {
     getData();
   }, []);
+  const theme = useTheme();
+  const [personName, setPersonName] = useState<string[]>([]);
 
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
   return (
     <div className="add-device">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -189,14 +229,37 @@ const AddDevice = () => {
                     Dịch vụ sử dụng::<span>*</span>
                   </div>
 
-                  <TextField
-                    variant="outlined"
-                    defaultValue={infoRow.dichVuSuDung || ""}
-                    {...register("a6", { required: true })}
-                    placeholder={infoRow.dichVuSuDung || "Nhập dịch vụ sử dụng"}
-                    required
-                    id="outlined-basic"
-                  />
+                  <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+                    <Select
+                      multiple
+                      displayEmpty
+                      value={personName}
+                      onChange={handleChange}
+                      input={<OutlinedInput />}
+                      renderValue={(selected) => {
+                        if (selected.length === 0) {
+                          return <em>Dịch vụ sử dụng</em>;
+                        }
+
+                        return selected.join(", ");
+                      }}
+                      MenuProps={MenuProps}
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      <MenuItem disabled value="">
+                        <em>Dịch vụ sử dụng</em>
+                      </MenuItem>
+                      {names.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                          style={getStyles(name, personName, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
               <div className="text-bottom">
