@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: "1:935597290769:web:61bb6618e4f2d954db88b0",
   measurementId: "G-RK5WVFMEJL"
 };
-
+// Kết nối với firebase 
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
