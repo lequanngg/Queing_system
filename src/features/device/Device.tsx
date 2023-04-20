@@ -25,7 +25,9 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../hooks/config";
 import { query, collection, getDocs } from "firebase/firestore";
 import { useAppDispatch } from "../../redux/reducer/store";
-import { deviceDetail } from "../../redux/actions/device";
+import { fetchDevices } from "../../redux/actions/device";
+import { useSelector } from "react-redux";
+// import { deviceDetail } from "../../redux/actions/device";
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -101,6 +103,8 @@ const Device = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
   const dispatch = useAppDispatch();
+  const devices = useSelector((state: any) => state.device.data);
+  console.log(devices, "devices")
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
@@ -127,18 +131,12 @@ const Device = () => {
 
   const queryDocument = query(collection(db, "device"));
 
-  const getData = async () => {
-    let row: any[] = [];
-    const querySnapshot = await getDocs(queryDocument);
-    querySnapshot.forEach((item) => {
-      const data = item.data();
-      data.id = item.id;
-      row.push(data);
-    });
-    setRowsData(row);
-  };
   useEffect(() => {
-    getData();
+    setRowsData(devices)
+  },[devices])
+
+  useEffect(() => {
+    dispatch(fetchDevices())
   }, []);
 
   return (
@@ -315,7 +313,7 @@ const Device = () => {
                           <div
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                              dispatch(deviceDetail("row"));
+                              // dispatch(deviceDetail("row"));
                               navigate(`/home/chitietthietbi?${row.id}`);
                             }}
                           >
@@ -338,7 +336,7 @@ const Device = () => {
                             //   alert(row.dichVuSuDung);
                             // }}
                             onClick={() => {
-                              dispatch(deviceDetail("row"));
+                              // dispatch(deviceDetail("row"));
                               navigate(`/home/themthietbi?${row.id}`);
                             }}
                             

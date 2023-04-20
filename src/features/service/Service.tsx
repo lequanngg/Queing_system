@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { query, collection, getDocs } from "firebase/firestore";
+import { useAppDispatch } from "../../redux/reducer/store";
 
 import {
   Table,
@@ -29,6 +30,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../hooks/config";
+import { useSelector } from "react-redux";
+import { fetchService } from "../../redux/actions/service";
+
+
 
 const MainHome = styled.div`
   margin-top: -88px;
@@ -102,6 +107,7 @@ const Service = () => {
 
   const [value, setValue] = useState<Dayjs | null>(dayjs("2022-04-17"));
   const [page, setPage] = useState(0);
+  const services = useSelector((state: any) => state.service.data);
   const [rowsPerPage, setRowsPerPage] = useState(9);
 
   const handleChangePage = (event: any, newPage: number) => {
@@ -112,6 +118,7 @@ const Service = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const dispatch = useAppDispatch();
 
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
@@ -123,19 +130,13 @@ const Service = () => {
     setOption2(event.target.value as string);
   };
   const [rowsData, setRowsData] = useState<any>([]);
-  const queryDocument = query(collection(db, "service"));
-  const getData = async () => {
-    let row: any[] = [];
-    const querySnapshot = await getDocs(queryDocument);
-    querySnapshot.forEach((item) => {
-      const data = item.data();
-      data.id = item.id;
-      row.push(data);
-    });
-    setRowsData(row);
-  };
+
   useEffect(() => {
-    getData();
+    setRowsData(services)
+  },[services])
+
+  useEffect(() => {
+    dispatch(fetchService())
   }, []);
 
   return (
